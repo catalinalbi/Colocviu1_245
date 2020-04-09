@@ -10,7 +10,6 @@ public class Colocviu1_245SecondaryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_practical_test01_245_main);
         Intent intent = getIntent();
         String allTerms = intent.getStringExtra("allTerms");
         int sum = 0;
