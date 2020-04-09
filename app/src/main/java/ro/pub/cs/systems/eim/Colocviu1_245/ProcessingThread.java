@@ -33,8 +33,8 @@ public class ProcessingThread extends Thread{
     private void sendMessage() {
         Intent intent = new Intent();
         intent.setAction("SEND_DATA");
-        intent.putExtra("NEW_DATA",
-                new Date(System.currentTimeMillis()) + " " + sum);
+        intent.putExtra("NEW_DATA", "DATE: " +
+                new Date(System.currentTimeMillis()) + " SUM: " + sum);
         context.sendBroadcast(intent);
     }
 

@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,7 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
 
     Button addButton, computeButton;
     EditText nextTermEditText;
-    TextView allTermsEditText;
+    TextView allTermsTextView;
     Context context;
     int sum = Integer.MAX_VALUE;
     String lastValue = "";
@@ -34,21 +32,21 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
         addButton = findViewById(R.id.add_button);
         computeButton = findViewById(R.id.compute_button);
         nextTermEditText = findViewById(R.id.nextTerm_editText);
-        allTermsEditText = findViewById(R.id.allTerms_textView);
+        allTermsTextView = findViewById(R.id.allTerms_textView);
         context = this;
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (nextTermEditText.getText().toString().length() >= 1) {
-                    String text = allTermsEditText.getText().toString();
+                    String text = allTermsTextView.getText().toString();
                     if (text.length() == 0) {
                         text = nextTermEditText.getText().toString();
                     }
                     else {
                         text += (" + " + nextTermEditText.getText().toString());
                     }
-                    allTermsEditText.setText(text);
+                    allTermsTextView.setText(text);
                     nextTermEditText.setText("");
                 }
             }
@@ -57,13 +55,13 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
         computeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (allTermsEditText.getText().toString().compareTo(lastValue) == 0) {
+                if (allTermsTextView.getText().toString().compareTo(lastValue) == 0) {
                     Toast.makeText(context, "The activity returned with result " + sum, Toast.LENGTH_LONG).show();
                 }
                 else {
-                    lastValue = allTermsEditText.getText().toString();
+                    lastValue = allTermsTextView.getText().toString();
                     Intent intent = new Intent(context, Colocviu1_245SecondaryActivity.class);
-                    intent.putExtra("allTerms", allTermsEditText.getText().toString());
+                    intent.putExtra("allTerms", allTermsTextView.getText().toString());
                     startActivityForResult(intent, 100);
                 }
             }
@@ -78,7 +76,7 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
     private class MessageBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "SERVER DATA: " + intent.getStringExtra("NEW_DATA").toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "SERVER DATA: " + intent.getStringExtra("NEW_DATA").toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -103,8 +101,8 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
         if (sum != Integer.MAX_VALUE) {
             savedInstanceState.putInt("allTermsSum", sum);
         }
-        if (allTermsEditText.getText().toString().length() > 0) {
-            savedInstanceState.putString("allTerms", allTermsEditText.getText().toString());
+        if (allTermsTextView.getText().toString().length() > 0) {
+            savedInstanceState.putString("allTerms", allTermsTextView.getText().toString());
         }
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -115,7 +113,7 @@ public class Colocviu1_245MainActivity extends AppCompatActivity {
             sum = savedInstanceState.getInt("allTermsSum");
         }
         if (savedInstanceState.containsKey("allTerms")) {
-            allTermsEditText.setText(savedInstanceState.getString("allTerms"));
+            allTermsTextView.setText(savedInstanceState.getString("allTerms"));
             if (lastValue == "") {
                 lastValue = savedInstanceState.getString("allTerms");
             }
